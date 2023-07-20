@@ -1,6 +1,6 @@
 <?php
 
-namespace Tots\AuthTfaBasic\Http\Controllers\Admin;
+namespace Tots\AuthTfaBasic\Http\Controllers;
 
 use Tots\AuthTfaBasic\Http\Requests\TfaBasicRequest;
 use Tots\AuthTfaBasic\Http\Responses\TfaBasicResponse;
