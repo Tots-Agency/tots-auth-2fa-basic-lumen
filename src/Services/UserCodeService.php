@@ -2,6 +2,7 @@
 
 namespace Tots\AuthTfaBasic\Services;
 
+use Tots\Auth\Models\TotsUser;
 use Tots\AuthTfaBasic\Models\TotsUserCode;
 
 /**
@@ -15,8 +16,14 @@ class UserCodeService
     {
         // Expire old codes
         $this->expiredAll($email);
+        // Verify if exist email user
+        $user = TotsUser::where('email', $email)->first();
+        if($user === null){
+            throw new \Exception('User not found');
+        }
         // Create new code
         $code = new TotsUserCode();
+        $code->user_id = $user->id;
         $code->sent = $email;
         $code->code = $this->generateCode();
         $code->status = TotsUserCode::STATUS_PENDING;
@@ -29,7 +36,7 @@ class UserCodeService
 
     public function expiredAll($email)
     {
-        TotsUserCode::where('email', $email)->update(['status' => TotsUserCode::STATUS_EXPIRED]);
+        TotsUserCode::where('sent', $email)->update(['status' => TotsUserCode::STATUS_EXPIRED]);
     }
 
     public function generateCode()
