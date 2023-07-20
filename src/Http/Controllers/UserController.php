@@ -3,20 +3,13 @@
 namespace Tots\AuthTfaBasic\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Tots\Auth\Models\TotsUser;
-use Tots\AuthTfaBasic\Http\Requests\TfaBasicRequest;
 use Tots\AuthTfaBasic\Http\Requests\TfaChangePasswordRequest;
-use Tots\AuthTfaBasic\Http\Requests\TfaValidateCodeRequest;
-use Tots\AuthTfaBasic\Http\Responses\TfaBasicResponse;
 use Tots\AuthTfaBasic\Http\Responses\TfaChangePasswordResponse;
-use Tots\AuthTfaBasic\Http\Responses\TfaValidateCodeResponse;
 use Tots\AuthTfaBasic\Models\TotsUserCode;
 use Tots\AuthTfaBasic\Services\UserCodeService;
 use Tots\AuthTfaBasic\Services\UserService;
-use Tots\Email\Services\TotsEmailService;
 
-class UserCodeController extends \Laravel\Lumen\Routing\Controller
+class UserController extends \Laravel\Lumen\Routing\Controller
 {
     protected UserCodeService $service;
     protected UserService $userService;
