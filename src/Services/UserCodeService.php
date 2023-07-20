@@ -2,6 +2,7 @@
 
 namespace Tots\AuthTfaBasic\Services;
 
+use Illuminate\Support\Facades\DB;
 use Tots\Auth\Models\TotsUser;
 use Tots\AuthTfaBasic\Models\TotsUserCode;
 
@@ -29,6 +30,25 @@ class UserCodeService
         $code->status = TotsUserCode::STATUS_PENDING;
         $code->provider = $provider;
         $code->expired_at = date('Y-m-d H:i:s', strtotime('+30 minutes'));
+        $code->save();
+
+        return $code;
+    }
+
+    public function valid($email, $code, $provider)
+    {
+        // Verify if exist code
+        $code = TotsUserCode::where('sent', $email)
+            ->where('code', $code)
+            ->where('provider', $provider)
+            ->where('status', TotsUserCode::STATUS_PENDING)
+            ->where('expired_at', '>=', date('Y-m-d H:i:s'))
+            ->first();
+        if($code === null){
+            throw new \Exception('Code not found');
+        }
+        // Update code
+        $code->status = TotsUserCode::STATUS_VERIFIED;
         $code->save();
 
         return $code;

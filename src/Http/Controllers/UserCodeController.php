@@ -4,7 +4,9 @@ namespace Tots\AuthTfaBasic\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Tots\AuthTfaBasic\Http\Requests\TfaBasicRequest;
+use Tots\AuthTfaBasic\Http\Requests\TfaValidateCodeRequest;
 use Tots\AuthTfaBasic\Http\Responses\TfaBasicResponse;
+use Tots\AuthTfaBasic\Http\Responses\TfaValidateCodeResponse;
 use Tots\AuthTfaBasic\Models\TotsUserCode;
 use Tots\AuthTfaBasic\Services\UserCodeService;
 use Tots\Email\Services\TotsEmailService;
@@ -33,5 +35,15 @@ class UserCodeController extends \Laravel\Lumen\Routing\Controller
         ]);
         // Reponse
         return TfaBasicResponse::make($code);
+    }
+
+    public function valid(Request $request)
+    {
+        // Validation
+        $this->validate($request, TfaValidateCodeRequest::rules());
+        /// Valid code
+        $this->service->valid($request->input('email'), $request->input('code'), TotsUserCode::PROVIDER_EMAIL);
+        // Reponse
+        return TfaValidateCodeResponse::make();
     }
 }
