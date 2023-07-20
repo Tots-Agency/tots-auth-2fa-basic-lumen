@@ -1,7 +1,7 @@
 {
     "name": "tots/auth-2fa-basic-lumen",
     "description": "The library for Lumen PHP",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "type": "library",
     "license": "MIT",
     "autoload": {
@@ -19,7 +19,8 @@
     "require": {
         "php": "^8.0",
         "laravel/lumen-framework": "^9.0|^10.0",
-        "tots/auth-lumen": "dev-main"
+        "tots/auth-lumen": "dev-main",
+        "tots/email-lumen": "dev-main"
     },
     "repositories": [
         {
@@ -32,7 +33,7 @@
         },
         {
             "type": "git",
-            "url": "https://github.com/tots-agency/tots-account-lumen.git"
+            "url": "https://github.com/tots-agency/tots-email-lumen.git"
         }
     ]
 }
