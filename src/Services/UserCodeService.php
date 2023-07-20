@@ -54,6 +54,25 @@ class UserCodeService
         return $code;
     }
 
+    public function use($email, $code, $provider)
+    {
+        // Verify if exist code
+        $code = TotsUserCode::where('sent', $email)
+            ->where('code', $code)
+            ->where('provider', $provider)
+            ->whereIn('status', [TotsUserCode::STATUS_PENDING, TotsUserCode::STATUS_VERIFIED])
+            ->where('expired_at', '>=', date('Y-m-d H:i:s'))
+            ->first();
+        if($code === null){
+            throw new \Exception('Code not found');
+        }
+        // Update code
+        $code->status = TotsUserCode::STATUS_USED;
+        $code->save();
+
+        return $code;
+    }
+
     public function expiredAll($email)
     {
         TotsUserCode::where('sent', $email)->update(['status' => TotsUserCode::STATUS_EXPIRED]);
