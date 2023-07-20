@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('sent', 250)->nullable(true);
             $table->string('code', 10)->index()->nullable(false);
             $table->tinyInteger('provider')->nullable(false)->default(0)->comment('0 = Email');
-            $table->tinyInteger('status')->nullable(false)->default(0)->comments('0 = Pending, 1 = Used, 2 = Expired');
+            $table->tinyInteger('status')->nullable(false)->default(0)->comments('0 = Pending, 1 = Verified, 2 = Used, 3 = Expired');
             $table->dateTime('expired_at')->nullable(true);
             $table->timestamps();
 
