@@ -13,18 +13,22 @@ use Tots\AuthTfaBasic\Models\TotsUserCode;
  */
 class UserCodeService
 {
-    public function create($email, $provider)
+    public function create($email, $provider, $verifyIfExist = true)
     {
         // Expire old codes
         $this->expiredAll($email);
         // Verify if exist email user
-        $user = TotsUser::where('email', $email)->first();
-        if($user === null){
-            throw new \Exception('User not found');
+        $userId = null;
+        if($verifyIfExist){
+            $user = TotsUser::where('email', $email)->first();
+            if($user === null){
+                throw new \Exception('User not found');
+            }
+            $userId = $user->id;
         }
         // Create new code
         $code = new TotsUserCode();
-        $code->user_id = $user->id;
+        $code->user_id = $userId;
         $code->sent = $email;
         $code->code = $this->generateCode();
         $code->status = TotsUserCode::STATUS_PENDING;

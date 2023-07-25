@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('tots_user_code', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->nullable(true);
             $table->string('sent', 250)->nullable(true);
             $table->string('code', 10)->index()->nullable(false);
             $table->tinyInteger('provider')->nullable(false)->default(0)->comment('0 = Email');
