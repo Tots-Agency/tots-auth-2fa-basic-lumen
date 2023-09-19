@@ -38,7 +38,7 @@ class UserCodeController extends \Laravel\Lumen\Routing\Controller
             $firstname = $user->firstname;
         }
         // Send email
-        $this->emailService->send($request->input('email'), 'recover-password-code-' . $request->input('lang') ?? 'en', [
+        $this->emailService->send($request->input('email'), 'recover-password-code-' . ($request->input('lang') ?? 'en'), [
             'firstname' => $firstname,
             'code' => $code->code,
             'expired_at' => $code->expired_at
