@@ -13,6 +13,7 @@ class TfaBasicRequest
     {
         return [
             'email' => 'required|email',
+            'lang' => 'string|nullable',
         ];
     }
 }
